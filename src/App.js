@@ -29,7 +29,7 @@ export default class App extends Component {
         todoItems: [...this.state.todoItems,
         { action: task, done: false }],
         // newItemText: ""
-      });
+      }, () => localStorage.setItem("todos", JSON.stringify(this.state)));
     }
   }
   toggleTodo = (todo) => this.setState({
@@ -52,6 +52,19 @@ export default class App extends Component {
       userName: this.state.userName === 'Olusola' ? 'Festus' : 'Olusola'
     })
   }
+  componentDidMount = () => {
+    let data = localStorage.getItem("todos");
+    this.setState(data != null ? JSON.parse(data) : {
+      userName: 'Olusola', todoItems: [
+        { action: 'Buy flowers', done: false },
+        { action: 'Get Shoes', done: false },
+        { action: 'Collect Tickets', done: true },
+        { action: 'Call Joe', done: false },
+      ],
+      showCompleted: true
+    });
+  }
+
   render = () => {
     return (
       <div>
